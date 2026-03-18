@@ -34,18 +34,18 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public String verify(User user) {
-        System.out.println(user.getUserEmail());
-        if(!userRepo.existsUserByUserEmail(user.getUserEmail())){
+    public String verify(String userEmail, String userPassword) {
+
+        if(!userRepo.existsUserByUserEmail(userEmail)){
             throw new RuntimeException("Email Not Found" );
         }
-
+        User dbUser = userRepo.findByUserEmail(userEmail).orElseThrow(()->new RuntimeException("User Not Found"));
 
         Authentication authentication = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPassword())
+                new UsernamePasswordAuthenticationToken(userEmail,userPassword)
         );
         if (authentication.isAuthenticated()) {
-            return jWTService.generateToken(user);
+            return jWTService.generateToken(dbUser);
         }
         return "failed";
     }

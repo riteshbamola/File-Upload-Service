@@ -29,9 +29,14 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        String accessToken = userService.verify(user);
-        String refreshToken = refreshTokenService.generateRefreshToken(user).getToken();
+    public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
+
+        String userEmail = body.get("email");
+        String userPassword = body.get("password");
+
+        String accessToken = userService.verify(userEmail,userPassword);
+        String refreshToken = refreshTokenService.generateRefreshToken(userEmail).getToken();
+
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(
                 "accessToken", accessToken,
                 "refreshToken", refreshToken
@@ -47,9 +52,12 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request){
         String refreshToken = request.get("refreshToken");
+
         RefreshToken verified = refreshTokenService.verifyRefreshToken(refreshToken);
+        String userEmail = verified.getUser().getUserEmail();
+
         String newAccessToken = refreshTokenService.generateAccessToken(verified);
-        String newRefreshToken = refreshTokenService.generateRefreshToken(verified.getUser()).getToken();
+        String newRefreshToken = refreshTokenService.generateRefreshToken(userEmail).getToken();
         return ResponseEntity.ok(Map.of(
                 "accessToken", newAccessToken,
                 "refreshToken", newRefreshToken

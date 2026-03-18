@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private Long userId;
 
     @Column(nullable = false)
     private String username;
@@ -31,8 +31,8 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
@@ -54,4 +54,5 @@ public class User {
                 ", createdAt=" + createdAt +
                 '}';
     }
+
 }

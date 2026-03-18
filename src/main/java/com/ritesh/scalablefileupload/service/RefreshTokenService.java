@@ -4,6 +4,7 @@ import com.ritesh.scalablefileupload.model.RefreshToken;
 import com.ritesh.scalablefileupload.model.User;
 import com.ritesh.scalablefileupload.repo.RefreshTokenRepo;
 import com.ritesh.scalablefileupload.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,21 @@ public class RefreshTokenService {
     @Autowired
     private UserRepo userRepo;
 
-    public RefreshToken generateRefreshToken(User user){
-        refreshTokenRepo.findByUser(user).ifPresent(refreshTokenRepo::delete);
-        RefreshToken refreshToken = new RefreshToken();
-        User verifiedUser = userRepo.findByUserEmail(user.getUserEmail());
-       
-        refreshToken.setToken(jwtService.generateRefreshToken(verifiedUser));
+    @Transactional
+    public RefreshToken generateRefreshToken(String email){
 
-        refreshToken.setUser(verifiedUser);
+        User user = userRepo.findByUserEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        refreshTokenRepo.findByUser(user).ifPresent(refreshTokenRepo::delete);
+        refreshTokenRepo.flush();
+
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setToken(jwtService.generateRefreshToken(user));
+        refreshToken.setUser(user);
 
         refreshToken.setExpiryDate(Instant.now().plusMillis(1000L * 60 * 60 * 24 * 7));
-
+        System.out.println(refreshToken.getToken());
+        System.out.println(refreshToken.getUser());
         return refreshTokenRepo.save(refreshToken);
     }
 

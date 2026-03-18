@@ -17,10 +17,7 @@ public class RiteshUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepo.findByUserEmail(email);
-        if(user==null){
-            throw new UsernameNotFoundException("User Not Found");
-        }
+        User user = userRepo.findByUserEmail(email).orElseThrow(() -> new RuntimeException("User not found"));;
         return new UserPrincipal(user);
 
     }
