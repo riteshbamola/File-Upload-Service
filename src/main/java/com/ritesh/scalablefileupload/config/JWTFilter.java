@@ -1,6 +1,7 @@
 package com.ritesh.scalablefileupload.config;
 
 import com.ritesh.scalablefileupload.service.JWTService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,11 +27,11 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     private ApplicationContext context;
 
-    // ✅ Fix 1: Skip filter entirely for register and login
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
-        return path.equals("/register") || path.equals("/login");
+        return path.equals("/register") || path.equals("/login") || path.equals("/refresh");
     }
 
     @Override
@@ -44,7 +45,19 @@ public class JWTFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtService.extractUserName(token);
+            try{
+                username = jwtService.extractUserName(token);
+            }catch (ExpiredJwtException e){
+                response.setStatus(401);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\": \"Expired Token\"}");
+                return;
+            }catch (Exception e){
+                    response.setStatus(401);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"message\": \"Invalid token\"}");
+                    return;
+            }
         }
 
         System.out.println(token + " " + username);
