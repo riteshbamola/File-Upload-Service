@@ -28,7 +28,7 @@ public class AppSecurityConfig {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request ->request
-                        .requestMatchers("regist","login")
+                        .requestMatchers("/register","/login")
                         .permitAll().anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -48,4 +48,8 @@ public class AppSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
 }

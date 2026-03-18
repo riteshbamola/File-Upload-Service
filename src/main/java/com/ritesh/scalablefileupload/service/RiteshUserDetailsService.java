@@ -16,15 +16,15 @@ public class RiteshUserDetailsService implements UserDetailsService {
     private UserRepo userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
-
-        if(user == null){
-            System.out.println("User Not Found");
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepo.findByUserEmail(email);
+        if(user==null){
             throw new UsernameNotFoundException("User Not Found");
         }
-       return new UserPrincipal(user);
-
+        return new UserPrincipal(user);
 
     }
+
+
 }
+

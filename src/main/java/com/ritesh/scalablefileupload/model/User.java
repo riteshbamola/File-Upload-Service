@@ -1,65 +1,57 @@
 package com.ritesh.scalablefileupload.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "users")
 public class User {
+
     @Id
-    private int userid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
+
+    @Column(nullable = false)
     private String username;
-    private String useremail;
-    private String userpaswword;
+
+    @Column(unique = true, nullable = false)
+    private String userEmail;
+
+    @Column(nullable = false)
+    private String userPassword;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public User() {}
 
-    public User(int userid, String userpaswword, String username, String useremail) {
-        this.userid = userid;
-        this.userpaswword = userpaswword;
+    public User(String username, String userEmail, String userPassword) {
         this.username = username;
-        this.useremail = useremail;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
     }
 
-    public int getUserid() {
-        return userid;
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getUserpaswword() {
-        return userpaswword;
-    }
+    public String getUserEmail() { return userEmail; }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 
-    public void setUserpaswword(String userpaswword) {
-        this.userpaswword = userpaswword;
-    }
+    public String getUserPassword() { return userPassword; }
+    public void setUserPassword(String userPassword) { this.userPassword = userPassword; }
 
-    public String getUseremail() {
-        return useremail;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
-    public void setUseremail(String useremail) {
-        this.useremail = useremail;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
     @Override
     public String toString() {
         return "User{" +
-                "userid=" + userid +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", useremail='" + useremail + '\'' +
-                ", userpaswword='" + userpaswword + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
-
 }
-
