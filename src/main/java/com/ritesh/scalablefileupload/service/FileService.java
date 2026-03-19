@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -78,6 +79,7 @@ public class FileService {
         }
 
         file.setStatus(FileStatus.UPLOADED);
+        file.setUpdatedAt(LocalDateTime.now());
         fileRepo.save(file);
 
         return Map.of(
@@ -105,6 +107,5 @@ public class FileService {
         awsService.deleteFile(key);
         fileRepo.delete(file);
     }
-
 
 }

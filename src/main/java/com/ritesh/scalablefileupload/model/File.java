@@ -95,7 +95,7 @@ public class File {
     public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
-
+    public void setUpdatedAt(LocalDateTime updatedAt){this.updatedAt = updatedAt;}
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
