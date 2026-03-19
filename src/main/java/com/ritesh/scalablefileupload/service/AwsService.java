@@ -50,7 +50,6 @@ public class AwsService {
                 .build();
 
         PresignedPutObjectRequest presignedRequest = s3Presigner.presignPutObject(presignRequest);
-
         return presignedRequest.url().toString();
     }
 

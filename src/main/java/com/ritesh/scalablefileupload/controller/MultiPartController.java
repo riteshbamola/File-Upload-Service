@@ -56,26 +56,15 @@ public class MultiPartController {
     }
 
     @DeleteMapping("/files/multipart/{fileId}")
-    public ResponseEntity<Map<String,String>> deleteMultiPart(@PathVariable Long fileId, @RequestBody Map<String,String> body){
-
-        String uploadId = body.get("uploadId");
-        String key = body.get("key");
-        System.out.println("Hit");
-
-        Map<String ,String> response  = multiPartService.abortMultiPartUpload(uploadId,key,fileId);
+    public ResponseEntity<Map<String,String>> deleteMultiPart(@PathVariable Long fileId){
+        Map<String ,String> response  = multiPartService.abortMultiPartUpload(fileId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-//    @PostMapping("/files/multipart/{fileId}")
-//    public ResponseEntity<Map<String,String>> confirmMultiPart(@PathVariable Long fileId, @RequestBody Map<String,String> body){
-//
-//        String uploadId = body.get("uploadId");
-//        String key = body.get("key");
-////        List<CompletedPart> parts = (List<CompletedPart>) body.get("parts");
-//        System.out.println("Hit");
-//
-//        Map<String ,String> response  = multiPartService.abortMultiPartUpload(uploadId,key,fileId);
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
 
+    @PostMapping("/files/multipart/complete/{fileId}")
+    public ResponseEntity<Map<String, String>> completeUpload(@PathVariable Long fileId) {
+        Map<String, String> response = multiPartService.completeUpload(fileId);
+        return ResponseEntity.ok(response);
+    }
 }

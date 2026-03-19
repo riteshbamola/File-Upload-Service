@@ -40,11 +40,16 @@ public class File {
     @Column(name = "storage_provider")
     private StorageProvider storageProvider = StorageProvider.S3;
 
+
+
     @Column(name = "storage_bucket", nullable = false)
     private String storageBucket;
 
     @Column(name = "storage_key", nullable = false, unique = true)
     private String storageKey;
+
+    @Column(name = "upload_id", unique = true)
+    private String uploadId;
 
     @Column(name = "storage_region")
     private String storageRegion;
@@ -68,6 +73,13 @@ public class File {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
 
+    public String getUploadId() {
+        return uploadId;
+    }
+
+    public void setUploadId(String uploadId) {
+        this.uploadId = uploadId;
+    }
 
     public Long getId() { return id; }
     public User getOwner() { return owner; }
