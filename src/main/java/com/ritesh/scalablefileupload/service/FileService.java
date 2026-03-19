@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -72,7 +73,6 @@ public class FileService {
                 .orElseThrow(() -> new RuntimeException("File not found"));
 
 
-        // check ownership
         if (file.getOwner().getUserId()!=(currentUser.getUserId())) {
             throw new RuntimeException("Unauthorized");
         }
@@ -85,4 +85,26 @@ public class FileService {
                 "url", awsService.getFileUrl(file.getStorageKey())
         );
     }
+
+    public List<File> getFiles() {
+        User user= authUtil.getCurrentUser();
+        List<File> files = fileRepo.findByOwner(user);
+        return files;
+    }
+
+    public File getFile(Long fileId){
+        File file = fileRepo.findById(fileId).orElseThrow(() -> new RuntimeException("File Not Found"));
+        return file;
+    }
+
+    public void deleteFile(Long fileId){
+
+        File file = fileRepo.findById(fileId).orElseThrow(()-> new RuntimeException("File not Found"));
+
+        String key = file.getStorageKey();
+        awsService.deleteFile(key);
+        fileRepo.delete(file);
+    }
+
+
 }
