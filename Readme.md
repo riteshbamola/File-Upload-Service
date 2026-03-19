@@ -51,20 +51,25 @@ Create an `application.properties` (or `application.yml`) file inside
 `server/src/main/resources/` with:
 
 ```properties
-server.port=5000
+# Database connection settings
+#spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+spring.datasource.url=jdbc:postgresql://localhost:5432/FileUpload
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=org.postgresql.Driver
 
-spring.data.mongodb.uri=mongodb://localhost:27017/file_uploads
+# JPA/Hibernate settings
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 
-jwt.access-token-secret=your_access_secret
-jwt.refresh-token-secret=your_refresh_secret
-jwt.access-token-expiry-ms=900000
-jwt.refresh-token-expiry-ms=604800000
+spring.jpa.open-in-view=false
+spring.thymeleaf.check-template-location=false
 
-aws.region=ap-south-1
-aws.bucket-name=your_bucket_name
+jwt.secret=Your_Secret
+jwt.expiration=86400000
 
-spring.servlet.multipart.max-file-size=5MB
-spring.servlet.multipart.max-request-size=5MB
+//aws credentials
 ```
 
 AWS credentials are loaded via the default SDK provider chain
