@@ -42,7 +42,7 @@ credentials server-side while still supporting secure, time-limited uploads.
 ## Prerequisites
 - Java 17 or higher
 - Maven 3.8+ (or Gradle)
-- MongoDB (local or hosted)
+- PostgreSQL (local or hosted)
 - AWS S3 bucket and credentials
 
 ## Environment Variables (server)
