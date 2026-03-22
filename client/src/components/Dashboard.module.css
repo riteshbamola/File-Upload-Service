@@ -1,0 +1,244 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: #111;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.logoutBtn {
+  background: none;
+  border: 1px solid #ccc;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #111;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.logoutBtn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* ── Upload section ── */
+.uploadSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.fileInput {
+  font-size: 14px;
+  color: #555;
+}
+
+.fileInput::file-selector-button {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.fileInput::file-selector-button:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.uploadBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.uploadBtn:hover {
+  background: #333;
+}
+
+/* ── Search ── */
+.searchWrapper {
+  margin-bottom: 28px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.searchInput::placeholder {
+  color: #999;
+}
+
+.searchInput:focus {
+  border-color: #111;
+}
+
+/* ── File grid ── */
+.fileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* ── File card ── */
+.fileCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.fileCard:hover {
+  border-color: #bbb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.fileName {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  word-break: break-word;
+}
+
+.fileMeta {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.fileActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.downloadBtn,
+.deleteBtn {
+  flex: 1;
+  padding: 7px 0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.downloadBtn {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+.downloadBtn:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.deleteBtn {
+  background: #fff;
+  color: #111;
+  border: 1px solid #ccc;
+}
+
+.deleteBtn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* ── Empty state ── */
+.emptyState {
+  text-align: center;
+  padding: 48px 16px;
+  color: #999;
+  font-size: 15px;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pageBtn {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: #666;
+  min-width: 80px;
+  text-align: center;
+}
